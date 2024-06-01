@@ -1,0 +1,105 @@
+.orderlist {
+    margin-top: 20px;
+}
+
+.orderlist table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.orderlist th, .orderlist td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.orderlist th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+.orderlist tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.orderlist tr:hover {
+    background-color: #f2f2f2;
+}
+
+.orderlist a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.orderlist a:hover {
+    text-decoration: underline;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff; /* สีน้ำเงิน */
+    color: #fff; /* สีข้อความ */
+    text-decoration: none; /* ลบการเส้นใต้ข้อความ */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* เพิ่มเอฟเฟกต์การเปลี่ยนสีเมื่อโฮเวอร์ */
+}
+
+.button:hover {
+    background-color: #0056b3; /* เปลี่ยนสีเมื่อโฮเวอร์ */
+}
+
+.status {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.in-progress {
+    background-color: #ff9900; 
+    color: white;
+}
+
+.processing {
+    background-color: #ff3300; 
+    color: white;
+}
+
+.return-requested {
+    background-color: #6666ff; 
+    color: white;
+}
+
+.delivered {
+    background-color: #00cc00;
+    color: white;
+}
+
+.returned {
+    background-color: #6600cc; 
+    color: white;
+}
+
+
+.status-pending { background-color: #ffc107; color: #000; }
+.status-processing { background-color: #007bff; color: #fff; }
+.status-shipped { background-color: #28a745; color: #fff; }
+.status-delivered { background-color: #17a2b8; color: #fff; }
+.status-return { background-color: #dc3545; color: #fff; }
+
+.btn-submit {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #28a745; 
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-submit:hover {
+    background-color: #218838; 
+}

@@ -1,0 +1,18 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/posts/addposts.css' %}">
+
+<div class="backposts">
+    <a href="{% url 'product_list' %}">ย้อนกลับ</a>
+</div>
+
+<div class="detailaddall">
+    <h1>Update product</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update</button>
+    </form>
+</div>
+{% endblock %}

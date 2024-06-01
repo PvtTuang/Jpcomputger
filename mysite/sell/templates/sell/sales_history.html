@@ -1,0 +1,294 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/sell/sellht.css' %}">
+
+<div class="sellbutton">
+    <a href="{% url 'search_sell_results' %}">บันทึกการขาย</a>
+</div>
+
+<div class="customerbox">
+    <h2>ประวัติการขายที่กำหนดเอง</h2>
+<form method="GET">
+    <label for="start_date">วันที่เริ่มต้น: </label>
+    <input type="date" id="start_date" name="start_date">
+    <label for="end_date">วันที่สิ้นสุด: </label>
+    <input type="date" id="end_date" name="end_date">
+    <button type="submit">ตกลง</button>
+</form>
+<ul>
+</div>
+
+<div class="dailybox">
+    <div id="graph-div">
+        {{ graph_div|safe }}
+    </div>
+    {% if custom_sales %}
+        <ul>
+            {% for sale in custom_sales %}
+                <li>
+                    {{ sale.product.name }}:
+                    {% if sale.product.product_type.name == 'Computer' %}
+                        {% for computer in sale.product.computer.all %}
+                         {{ computer.brand }} - {{ computer.cpu_band }}
+                         {{ computer.cpu_gen }} {{ computer.cpu_series }}
+                         Ram {{ computer.ram }} GB Rom {{ computer.rom }}
+                         {{ computer.gpu }} -
+                        {% endfor %}
+                    {% endif %} 
+                    
+                    {% if sale.product.product_type.name == 'Notebook' %}
+                        {% for notebook in sale.product.notebook.all %}
+                         {{ notebook.brand }} - {{ notebook.cpu_band }}
+                         {{ notebook.cpu_gen }} {{ notebook.cpu_series }}
+                         Ram {{ notebook.ram }} GB Rom {{ notebook.rom }}
+                         {{ notebook.gpu }} -
+                        {% endfor %}
+                    {% endif %} 
+
+                    {% if sale.product.product_type.name == 'Monitor' %}
+                        {% for monitor in sale.product.monitor.all %}
+                         {{ monitor.brand }} - ขนาด {{ monitor.size }} นิ้ว
+                         พาแนล {{ monitor.panel }} รีเฟรชเรท {{ monitor.refresh_rate }} -
+                        {% endfor %}
+                    {% endif %} 
+
+                    {% if sale.product.product_type.name == 'MouseKeyboard' %}
+                        {% for mousekeyboard in sale.product.mousekeyboard.all %}
+                         {{ mousekeyboard.brand }} - DPI {{ mousekeyboard.dpi }}
+                         การเชื่อมต่อ {{ mousekeyboard.connect }} -
+                        {% endfor %}
+                    {% endif %} 
+
+                    {% if sale.product.product_type.name == 'HeadphoneSpeakers' %}
+                        {% for headphonespeaker in sale.product.headphonespeaker.all %}
+                         {{ headphonespeaker.brand }} - ขนาด {{ headphonespeaker.size }}
+                         การเชื่อมต่อ {{ headphonespeaker.connect }} -
+                        {% endfor %}
+                    {% endif %}
+                    
+                    {% if sale.product.product_type.name == 'Printers' %}
+                        {% for printer in sale.product.printer.all %}
+                         {{ printer.brand }} - ประเภทสี {{ printer.color }}
+                         ประเภทหมึก {{ printer.type_of_ink }} -
+                        {% endfor %}
+                    {% endif %} 
+
+                    {% if sale.product.product_type.name == 'SDCards_USBs' %}
+                        {% for sdcards_usb in sale.product.sdcards_usb.all %}
+                         {{ sdcards_usb.brand }} - ความจุ {{ sdcards_usb.capacity }}
+                         ความเร็ว {{ sdcards_usb.speed }}  -
+                        {% endfor %}
+                    {% endif %} 
+
+                    {% if sale.product.product_type.name == 'ConnectivityDevices' %}
+                        {% for connectivitydevice in sale.product.connectivitydevice.all %}
+                         {{ connectivitydevice.brand }} - {{ connectivitydevice.cpu_band }}
+                         {{ connectivitydevice.cpu_gen }} {{ connectivitydevice.cpu_series }}
+                         Ram {{ connectivitydevice.ram }} GB Rom {{ connectivitydevice.rom }}
+                         {{ connectivitydevice.gpu }} -
+                        {% endfor %}
+                    {% endif %} 
+
+                    ราคา: {{ sale.product.price|floatformat:0 }} บาท
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <li>ไม่พบยอดขายที่กำหนดเอง.</li>
+    {% endif %}
+
+    {% if total_price %}
+        <p>ราคารวม: {{ total_price|floatformat:0 }} บาท</p>
+    {% endif %}
+</div>
+
+<div class="dailysales">
+    <h2>ยอดขายรายวัน</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ชื่อสินค้า</th>
+                <th>จำนวนที่ขาย</th>
+                <th>เวลาที่ขาย</th>
+                <th>ลบสินค้า</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sale in daily_sales %}
+                <tr>
+                    <td>
+                    {{ sale.product.name }}:
+                    {% if sale.product.product_type.name == 'Computer' %}
+                        {% for computer in sale.product.computer.all %}
+                         {{ computer.brand }} - {{ computer.cpu_band }}
+                         {{ computer.cpu_gen }} {{ computer.cpu_series }}
+                         Ram {{ computer.ram }} GB Rom {{ computer.rom }}
+                         {{ computer.gpu }} 
+                        {% endfor %}
+                    {% endif %} 
+                    
+                    {% if sale.product.product_type.name == 'Notebook' %}
+                        {% for notebook in sale.product.notebook.all %}
+                         {{ notebook.brand }} - {{ notebook.cpu_band }}
+                         {{ notebook.cpu_gen }} {{ notebook.cpu_series }}
+                         Ram {{ notebook.ram }} GB Rom {{ notebook.rom }}
+                         {{ notebook.gpu }} 
+                        {% endfor %}
+                    {% endif %} 
+
+                    {% if sale.product.product_type.name == 'Monitor' %}
+                        {% for monitor in sale.product.monitor.all %}
+                         {{ monitor.brand }} - ขนาด {{ monitor.size }} นิ้ว
+                         พาแนล {{ monitor.panel }} รีเฟรชเรท {{ monitor.refresh_rate }} 
+                        {% endfor %}
+                    {% endif %} 
+
+                    {% if sale.product.product_type.name == 'MouseKeyboard' %}
+                        {% for mousekeyboard in sale.product.mousekeyboard.all %}
+                         {{ mousekeyboard.brand }} - DPI {{ mousekeyboard.dpi }}
+                         การเชื่อมต่อ {{ mousekeyboard.connect }} 
+                        {% endfor %}
+                    {% endif %} 
+
+                    {% if sale.product.product_type.name == 'HeadphoneSpeakers' %}
+                        {% for headphonespeaker in sale.product.headphonespeaker.all %}
+                         {{ headphonespeaker.brand }} - ขนาด {{ headphonespeaker.size }}
+                         การเชื่อมต่อ {{ headphonespeaker.connect }} 
+                        {% endfor %}
+                    {% endif %}
+                    
+                    {% if sale.product.product_type.name == 'Printers' %}
+                        {% for printer in sale.product.printer.all %}
+                         {{ printer.brand }} - ประเภทสี {{ printer.color }}
+                         ประเภทหมึก {{ printer.type_of_ink }} 
+                        {% endfor %}
+                    {% endif %} 
+
+                    {% if sale.product.product_type.name == 'SDCards_USBs' %}
+                        {% for sdcards_usb in sale.product.sdcards_usb.all %}
+                         {{ sdcards_usb.brand }} - ความจุ {{ sdcards_usb.capacity }}
+                         ความเร็ว {{ sdcards_usb.speed }}  
+                        {% endfor %}
+                    {% endif %} 
+
+                    {% if sale.product.product_type.name == 'ConnectivityDevices' %}
+                        {% for connectivitydevice in sale.product.connectivitydevice.all %}
+                         {{ connectivitydevice.brand }} - {{ connectivitydevice.cpu_band }}
+                         {{ connectivitydevice.cpu_gen }} {{ connectivitydevice.cpu_series }}
+                         Ram {{ connectivitydevice.ram }} GB Rom {{ connectivitydevice.rom }}
+                         {{ connectivitydevice.gpu }} 
+                        {% endfor %}
+                    {% endif %} 
+                    
+                   </td>
+                    <td> {{ sale.product.price|floatformat:0 }} บาท</td>
+                    <td>{{ sale.sold_at|date:"j F Y H:i" }} น.</td>
+                    <td>
+                        <form method="post" action="{% url 'delete_sales_history' sale.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" style="background-color: #ff0000; color: #ffffff; border: none; padding: 5px 10px; border-radius: 5px;">ลบสินค้า</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h3>ราคารวม: {{ daily_total_price|floatformat:0 }} บาท</h3>
+</div>
+
+<div class="monthlysales">
+    <h2>ยอดขายรายเดือน</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ชื่อสินค้า</th>
+                <th>จำนวนที่ขาย</th>
+                <th>เวลาที่ขาย</th>
+                <th>ลบสินค้า</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sale in monthly_sales %}
+                <tr>
+                    <td>
+                        {{ sale.product.name }}:
+                        {% if sale.product.product_type.name == 'Computer' %}
+                            {% for computer in sale.product.computer.all %}
+                             {{ computer.brand }} - {{ computer.cpu_band }}
+                             {{ computer.cpu_gen }} {{ computer.cpu_series }}
+                             Ram {{ computer.ram }} GB Rom {{ computer.rom }}
+                             {{ computer.gpu }} 
+                            {% endfor %}
+                        {% endif %} 
+                        
+                        {% if sale.product.product_type.name == 'Notebook' %}
+                            {% for notebook in sale.product.notebook.all %}
+                             {{ notebook.brand }} - {{ notebook.cpu_band }}
+                             {{ notebook.cpu_gen }} {{ notebook.cpu_series }}
+                             Ram {{ notebook.ram }} GB Rom {{ notebook.rom }}
+                             {{ notebook.gpu }} 
+                            {% endfor %}
+                        {% endif %} 
+    
+                        {% if sale.product.product_type.name == 'Monitor' %}
+                            {% for monitor in sale.product.monitor.all %}
+                             {{ monitor.brand }} - ขนาด {{ monitor.size }} นิ้ว
+                             พาแนล {{ monitor.panel }} รีเฟรชเรท {{ monitor.refresh_rate }} -
+                            {% endfor %}
+                        {% endif %} 
+    
+                        {% if sale.product.product_type.name == 'MouseKeyboard' %}
+                            {% for mousekeyboard in sale.product.mousekeyboard.all %}
+                             {{ mousekeyboard.brand }} - DPI {{ mousekeyboard.dpi }}
+                             การเชื่อมต่อ {{ mousekeyboard.connect }} 
+                            {% endfor %}
+                        {% endif %} 
+    
+                        {% if sale.product.product_type.name == 'HeadphoneSpeakers' %}
+                            {% for headphonespeaker in sale.product.headphonespeaker.all %}
+                             {{ headphonespeaker.brand }} - ขนาด {{ headphonespeaker.size }}
+                             การเชื่อมต่อ {{ headphonespeaker.connect }} 
+                            {% endfor %}
+                        {% endif %}
+                        
+                        {% if sale.product.product_type.name == 'Printers' %}
+                            {% for printer in sale.product.printer.all %}
+                             {{ printer.brand }} - ประเภทสี {{ printer.color }}
+                             ประเภทหมึก {{ printer.type_of_ink }} 
+                            {% endfor %}
+                        {% endif %} 
+    
+                        {% if sale.product.product_type.name == 'SDCards_USBs' %}
+                            {% for sdcards_usb in sale.product.sdcards_usb.all %}
+                             {{ sdcards_usb.brand }} - ความจุ {{ sdcards_usb.capacity }}
+                             ความเร็ว {{ sdcards_usb.speed }}  
+                            {% endfor %}
+                        {% endif %} 
+    
+                        {% if sale.product.product_type.name == 'ConnectivityDevices' %}
+                            {% for connectivitydevice in sale.product.connectivitydevice.all %}
+                             {{ connectivitydevice.brand }} - {{ connectivitydevice.cpu_band }}
+                             {{ connectivitydevice.cpu_gen }} {{ connectivitydevice.cpu_series }}
+                             Ram {{ connectivitydevice.ram }} GB Rom {{ connectivitydevice.rom }}
+                             {{ connectivitydevice.gpu }} 
+                            {% endfor %}
+                        {% endif %} 
+                    </td>
+                    <td>{{ sale.product.price|floatformat:0 }} บาท</td>
+                    <td>{{ sale.sold_at|date:"j F Y H:i" }} น.</td>
+                    <td>
+                        <form method="post" action="{% url 'delete_sales_history' sale.id %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" style="background-color: #ff0000; color: #ffffff; border: none; padding: 5px 10px; border-radius: 5px;">ลบสินค้า</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h3>ราคารวม: {{ monthly_total_price|floatformat:0 }} บาท</h3>
+</div>
+
+
+{% endblock %}

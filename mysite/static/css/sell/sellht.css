@@ -1,0 +1,83 @@
+.sellbutton {
+    text-align: center;
+}
+
+.sellbutton a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    box-shadow: 0 10px 6px rgba(0, 0, 0, 0.1);
+}
+
+.sellbutton a:hover {
+    background-color: #0056b3;
+}
+
+.customerbox {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 600px;
+}
+
+.dailybox {
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px;
+}
+
+.dailybox table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.dailybox table th,
+.dailybox table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.dailybox table th {
+    background-color: #f2f2f2;
+}
+
+.dailybox p {
+    margin: 10px 0;
+}
+
+.dailysales, .monthlysales {
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.dailysales table, .monthlysales table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.dailysales table th, .dailysales table td,
+.monthlysales table th, .monthlysales table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.dailysales table th, .monthlysales table th {
+    background-color: #f2f2f2;
+}

@@ -1,0 +1,25 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/buy/shipping.css' %}">
+
+<div class="shippingbox">
+    <h1>ที่อยู่ในการจัดส่ง</h1>
+    <a href="{% url 'add_shipping_address' %}" class="btn-add-address">เพิ่มที่อยู่</a>
+    <ul>
+        {% for shipping_address in shipping_addresses %}
+            <li>
+                <p>{{ shipping_address.firstname }} {{ shipping_address.lastname }}</p>
+                <p>{{ shipping_address.house_number }}, {{ shipping_address.swine }}, {{ shipping_address.subswine }}, {{ shipping_address.subdistrict }}, {{ shipping_address.district }}, {{ shipping_address.province }}, {{ shipping_address.postal_code }}</p>
+                <p>{{ shipping_address.number }}</p>
+                <a href="{% url 'edit_shipping_address' shipping_address.id %}" class="btn-edit">แก้ไข</a>
+                <form method="POST" action="{% url 'delete_shipping_address' shipping_address.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-delete">ลบที่อยู่</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

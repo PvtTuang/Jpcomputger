@@ -1,0 +1,56 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/posts/addposts.css' %}">
+
+<div class="backposts">
+    <a href="{% url 'product_list' %}">ย้อนกลับ</a>
+</div>
+
+<div class="detailaddall">
+    <h1>Add Notebook</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <ul>
+            <p>Product id: {{ product.id }} {{ product.name }} {{ product.description }}</p>
+            <input type="hidden" name="product" value="{{ product.id }}">
+        </ul>
+        <ul>
+            <p>Brand</p>{{ form.brand }}
+        </ul>
+        <ul>
+            <p>Accessorise</p>{{ form.accessorise}}
+        </ul>
+        <ul>
+            <p>Cpu band</p>{{ form.cpu_band }}
+        </ul>
+        <ul>
+            <p>Cpu gen</p>{{ form.cpu_gen}}
+        </ul>
+        <ul>
+            <p>Cpu series</p>{{ form.cpu_series}}
+        </ul>
+        <ul>
+            <p>Display</p>{{ form.display }}
+        </ul>
+        <ul>
+            <p>Camera</p>{{ form.camera }}
+        </ul>
+        <ul>
+            <p>Ram</p>{{ form.ram }}
+        </ul>
+        <ul>
+            <p>Rom</p>{{ form.rom }}
+        </ul>
+        <ul>
+            <p>Gpu</p>{{ form.gpu }}
+        </ul>
+        <ul>
+            <p>System</p>{{ form.system}}
+        </ul>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+{% endblock %}
+   

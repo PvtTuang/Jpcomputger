@@ -1,0 +1,50 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/transport/list.css' %}">
+    <h1>รายการคำสั่งซื้อ</h1>
+    <div class="transportorder">
+        <table>
+            <thead>
+                <tr>
+                    <th>รหัสคำสั่งซื้อ</th>
+                    <th>ผู้ใช้</th>
+                    <th>สถานะ</th>
+                    <th>จำนวนเงินทั้งหมด</th>
+                    <th>สร้างเมื่อ</th>
+                    <th>รายละเอียด</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order, total_amount in orders_with_totals %}
+                    {% if order.status == 'ตรวจสอบคำสั่งซื้อ' %}
+                        <tr>
+                            <td>{{ order.id }}</td>
+                            <td>{{ order.cart.user.first_name }}  {{ order.cart.user.last_name }}</td>
+                            <td>{{ order.status }}</td>
+                            <td>{{ total_amount }}</td>
+                            <td>{{ order.created_at|date:"j F Y H:i" }}</td>
+                            <td>
+                                <a href="{% url 'order_detail' order.id %}" class="btn-view-details">รายละเอียด</a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                {% for order, total_amount in orders_with_totals %}
+                    {% if order.status != 'ตรวจสอบคำสั่งซื้อ' %}
+                        <tr>
+                            <td>{{ order.id }}</td>
+                            <td>{{ order.cart.user.first_name }}  {{ order.cart.user.last_name }}</td>
+                            <td>{{ order.status }}</td>
+                            <td>{{ total_amount }}</td>
+                            <td>{{ order.created_at|date:"j F Y H:i" }}</td>
+                            <td>
+                                <a href="{% url 'order_detail' order.id %}" class="btn-view-details">รายละเอียด</a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,121 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/buy/cart.css' %}">
+ 
+    <h1>ตะกร้าสินค้า</h1>
+<div class="containercart">
+    <div class="productall">
+        <table>
+            <thead>
+                <tr>
+                    <th>สินค้า</th>
+                    <th>จำนวน</th>
+                    <th>ราคา</th>
+                    <th>ลบสินค้า</th>
+                </tr>
+            </thead>
+            <tbody>
+            
+                {% for cart_item in cart_items %}
+                <tr>
+                    <td>
+                    <img src="{{ cart_item.product.image1.url }}" alt="{{ cart_item.product.name }}" class="product-image">
+                    {{ cart_item.product.name }}:
+                    {% if cart_item.product.product_type.name == 'Computer' %}
+                        {% for computer in cart_item.product.computer.all %}
+                         {{ computer.brand }} - {{ computer.cpu_band }}
+                         {{ computer.cpu_gen }} {{ computer.cpu_series }}
+                         Ram {{ computer.ram }} GB Rom {{ computer.rom }}
+                         {{ computer.gpu }} 
+                        {% endfor %}
+                    {% endif %} 
+                    
+                    {% if cart_item.product.product_type.name == 'Notebook' %}
+                        {% for notebook in cart_item.product.notebook.all %}
+                         {{ notebook.brand }} - {{ notebook.cpu_band }}
+                         {{ notebook.cpu_gen }} {{ notebook.cpu_series }}
+                         Ram {{ notebook.ram }} GB Rom {{ notebook.rom }}
+                         {{ notebook.gpu }} 
+                        {% endfor %}
+                    {% endif %} 
+
+                    {% if cart_item.product.product_type.name == 'Monitor' %}
+                        {% for monitor in cart_item.product.monitor.all %}
+                         {{ monitor.brand }} - ขนาด {{ monitor.size }} นิ้ว
+                         พาแนล {{ monitor.panel }} รีเฟรชเรท {{ monitor.refresh_rate }} 
+                        {% endfor %}
+                    {% endif %} 
+
+                    {% if cart_item.product.product_type.name == 'MouseKeyboard' %}
+                        {% for mousekeyboard in cart_item.product.mousekeyboard.all %}
+                         {{ mousekeyboard.brand }} - DPI {{ mousekeyboard.dpi }}
+                         การเชื่อมต่อ {{ mousekeyboard.connect }} 
+                        {% endfor %}
+                    {% endif %} 
+
+                    {% if cart_item.product.product_type.name == 'HeadphoneSpeakers' %}
+                        {% for headphonespeaker in cart_item.product.headphonespeaker.all %}
+                         {{ headphonespeaker.brand }} - ขนาด {{ headphonespeaker.size }}
+                         การเชื่อมต่อ {{ headphonespeaker.connect }} 
+                        {% endfor %}
+                    {% endif %}
+                    
+                    {% if cart_item.product.product_type.name == 'Printers' %}
+                        {% for printer in cart_item.product.printer.all %}
+                         {{ printer.brand }} - ประเภทสี {{ printer.color }}
+                         ประเภทหมึก {{ printer.type_of_ink }} 
+                        {% endfor %}
+                    {% endif %} 
+
+                    {% if cart_item.product.product_type.name == 'SDCards_USBs' %}
+                        {% for sdcards_usb in cart_item.product.sdcards_usb.all %}
+                         {{ sdcards_usb.brand }} - ความจุ {{ sdcards_usb.capacity }}
+                         ความเร็ว {{ sdcards_usb.speed }}  
+                        {% endfor %}
+                    {% endif %} 
+
+                    {% if cart_item.product.product_type.name == 'ConnectivityDevices' %}
+                        {% for connectivitydevice in cart_item.product.connectivitydevice.all %}
+                         {{ connectivitydevice.brand }} - {{ connectivitydevice.cpu_band }}
+                         {{ connectivitydevice.cpu_gen }} {{ connectivitydevice.cpu_series }}
+                         Ram {{ connectivitydevice.ram }} GB Rom {{ connectivitydevice.rom }}
+                         {{ connectivitydevice.gpu }} 
+                        {% endfor %}
+                    {% endif %} 
+                   </td>
+                    <td>
+                        <form method="post" action="{% url 'update_cart' cart_item.id %}">
+                            {% csrf_token %}
+                            <input type="number" name="quantity" value="{{ cart_item.quantity }}">
+                            <button type="submit" class="update-btn">อัพเดต</button>
+                        </form>
+                    </td>
+                    <td> {{ cart_item.product.price|floatformat:0 }} บาท</td>
+                    <td>
+                        <a href="{% url 'remove_from_cart' cart_item.id %}" class="remove-btn">ลบ</a>
+                    </td>                    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+          
+<p>ราคาทั้งหมด: {{ total_price|floatformat:0 }} บาท</p>
+    </div>
+</div>
+
+<div class="cart-payment">
+    {% if cart %}
+    <form action="{% url 'create_order' cart.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="payment-btn">จ่ายเงิน</button>
+    </form>
+    {% endif %}
+</div>
+
+
+<div class="back-to-shop">
+    <a href="{% url 'home' %}" class="back-to-shop-btn">เลือกซื้อสินค้า</a>
+</div>
+
+{% endblock %}

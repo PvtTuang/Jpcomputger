@@ -1,0 +1,102 @@
+.product-image {
+    width: 150px; 
+    height: 100px; 
+    margin-left: 5px;
+}
+
+.productdetail {
+    background-color: #f2f2f2; 
+    padding: 10px;
+    margin-bottom: 10px; 
+}
+
+.productdetail:nth-child(odd) {
+    background-color: #ffffff; 
+}
+
+.productdetail li {
+    list-style-type: none; 
+    margin-bottom: 5px; 
+}
+
+.PromptPayimges {
+    width: 300px; 
+    height: auto; 
+    display: block; 
+    margin: 0 auto 20px; 
+}
+
+.shippping {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.shippping form {
+    margin-bottom: 10px;
+}
+
+.shippping label {
+    font-weight: bold;
+}
+
+.shippping select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.shippping button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.shippping button[type="submit"]:hover {
+    background-color: #45a049;
+}
+.shippping a {
+    color: #007bff;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.shippping a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+.uploadslip {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.uploadslip label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.uploadslip input[type="file"] {
+    margin-bottom: 10px;
+}
+
+.uploadslip button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.uploadslip button[type="submit"]:hover {
+    background-color: #0056b3;
+}

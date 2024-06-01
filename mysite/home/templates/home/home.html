@@ -1,0 +1,272 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/home/pagehome.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<div class="slidebar">
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{% static 'images/jpcomputer.jpg' %}" class="d-block w-100 "  alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'images/jpshop.jpg' %}" class="d-block w-100 " alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'images/jpshop1.jpg' %}" class="d-block w-100 " alt="...">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="boxcategory">
+    <div class="buttoncategory">
+        <a href="{% url 'home' %}">ทั้งหมด</a>
+        <a href="{% url 'computer_all' %}">คอมพิวเตอร์</a>
+        <a href="{% url 'notebook_all' %}">โน๊ตบุ๊ค</a>
+        <a href="{% url 'monitor_all' %}">จอมอนิเตอร์</a>
+        <a href="{% url 'mousekeyboard_all' %}">เมาส์และคีย์บอร์ด</a>
+        <a href="{% url 'headphonespeaker_all' %}">หูฟังและลำโพง</a>
+        <a href="{% url 'printer_all' %}">เครื่องพิมพ์</a>
+        <a href="{% url 'sdcards_usb_all' %}">การ์ด SD และ USB</a>
+        <a href="{% url 'connectivitydevice_all' %}">อุปกรณ์เชื่อมต่อ</a>
+    </div>
+</div>
+
+<div class="logo">
+    <img src="{% static 'images/jpcomputer.jpg' %}" alt="JpComputer Logo">
+</div>
+
+<h1>สินค้าทั้งหมด</h1>
+<div class="category">
+    <h2>คอมพิวเตอร์</h2>
+    <div class="row product-row">
+        {% if not product %}
+            {% for product in products %}
+                {% if product.quantity > 0 %}
+                    {% for computer in product.computer.all|slice:":5" %}
+                        <div class="col-lg-2 col-md-4 col-sm-6 product-item">
+                            <img src="{{ product.image1.url }}" class="product-image" alt="Product Image">
+                            <h5>{{ product.name }}</h5>
+                            <p>{{ product.description }}</p>
+                            <p>Brand: {{ computer.brand }}</p>
+                            <div class="product-actions">
+                                <a href="{% url 'product_detail' product.id %}" class="btn btn-primary"><i class="fas fa-info-circle"></i>รายละเอียด</a>
+                                <form method="POST" action="{% url 'like_product' product.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="like-button"><i class="far fa-heart"></i></button>
+                                </form>
+                            </div>                   
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+<div class="category">
+    <h2>โน๊ตบุ๊ค</h2>
+    <div class="row product-row">
+        {% if not product %}
+            {% for product in products %}
+                {% if product.quantity > 0 %}
+                    {% for notebook in product.notebook.all|slice:":5" %}
+                        <div class="col-lg-2 col-md-4 col-sm-6 product-item">
+                            <img src="{{ product.image1.url }}" class="product-image" alt="Product Image">
+                            <h5>{{ product.name }}</h5>
+                            <p>{{ product.description }}</p>
+                            <p>Brand: {{ notebook.brand }}</p>
+                            <div class="product-actions">
+                                <a href="{% url 'product_detail' product.id %}" class="btn btn-primary"><i class="fas fa-info-circle"></i>รายละเอียด</a>
+                                <form method="POST" action="{% url 'like_product' product.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="like-button"><i class="far fa-heart"></i></button>
+                                </form>
+                            </div> 
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+<div class="category">
+    <h2>จอมอนิเตอร์</h2>
+    <div class="row product-row">
+        {% if not product %}
+            {% for product in products %}
+                {% if product.quantity > 0 %}
+                    {% for monitor in product.monitor.all|slice:":5" %}
+                        <div class="col-lg-2 col-md-4 col-sm-6 product-item">
+                            <img src="{{ product.image1.url }}" class="product-image" alt="Product Image">
+                            <h5>{{ product.name }}</h5>
+                            <p>{{ product.description }}</p>
+                            <p>Brand: {{ monitor.brand }}</p>
+                            <div class="product-actions">
+                                <a href="{% url 'product_detail' product.id %}" class="btn btn-primary"><i class="fas fa-info-circle"></i>รายละเอียด</a>
+                                <form method="POST" action="{% url 'like_product' product.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="like-button"><i class="far fa-heart"></i></button>
+                                </form>
+                            </div> 
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+<div class="category">
+    <h2>เมาส์และคีย์บอร์ด</h2>
+    <div class="row product-row">
+        {% if not product %}
+            {% for product in products %}
+                {% if product.quantity > 0 %}
+                    {% for mousekeyboard in product.mousekeyboard.all|slice:":5" %}
+                        <div class="col-lg-2 col-md-4 col-sm-6 product-item">
+                            <img src="{{ product.image1.url }}" class="product-image" alt="Product Image">
+                            <h5>{{ product.name }}</h5>
+                            <p>{{ product.description }}</p>
+                            <p>Brand: {{ mousekeyboard.brand }}</p>
+                            <div class="product-actions">
+                                <a href="{% url 'product_detail' product.id %}" class="btn btn-primary"><i class="fas fa-info-circle"></i>รายละเอียด</a>
+                                <form method="POST" action="{% url 'like_product' product.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="like-button"><i class="far fa-heart"></i></button>
+                                </form>
+                            </div> 
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+
+<div class="category">
+    <h2>หูฟังและลำโพง</h2>
+    <div class="row product-row">
+        {% if not product %}
+            {% for product in products %}
+                {% if product.quantity > 0 %}
+                    {% for headphonespeaker in product.headphonespeaker.all|slice:":5" %}
+                        <div class="col-lg-2 col-md-4 col-sm-6 product-item">
+                            <img src="{{ product.image1.url }}" class="product-image" alt="Product Image">
+                            <h5>{{ product.name }}</h5>
+                            <p>{{ product.description }}</p>
+                            <p>Brand: {{ headphonespeaker.brand }}</p>
+                            <div class="product-actions">
+                                <a href="{% url 'product_detail' product.id %}" class="btn btn-primary"><i class="fas fa-info-circle"></i>รายละเอียด</a>
+                                <form method="POST" action="{% url 'like_product' product.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="like-button"><i class="far fa-heart"></i></button>
+                                </form>
+                            </div> 
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+
+<div class="category">
+    <h2>เครื่องพิมพ์</h2>
+    <div class="row product-row">
+        {% if not product %}
+            {% for product in products %}
+                {% if product.quantity > 0 %}
+                    {% for printer in product.printer.all|slice:":5" %}
+                        <div class="col-lg-2 col-md-4 col-sm-6 product-item">
+                            <img src="{{ product.image1.url }}" class="product-image" alt="Product Image">
+                            <h5>{{ product.name }}</h5>
+                            <p>{{ product.description }}</p>
+                            <p>Brand: {{ printer.brand }}</p>
+                            <div class="product-actions">
+                                <a href="{% url 'product_detail' product.id %}" class="btn btn-primary"><i class="fas fa-info-circle"></i>รายละเอียด</a>
+                                <form method="POST" action="{% url 'like_product' product.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="like-button"><i class="far fa-heart"></i></button>
+                                </form>
+                            </div> 
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+
+<div class="category">
+    <h2>การ์ด SD และ USB</h2>
+    <div class="row product-row">
+        {% if not product %}
+            {% for product in products %}
+                {% if product.quantity > 0 %}
+                    {% for sdcards_usb in product.sdcards_usb.all|slice:":5" %}
+                        <div class="col-lg-2 col-md-4 col-sm-6 product-item">
+                            <img src="{{ product.image1.url }}" class="product-image" alt="Product Image">
+                            <h5>{{ product.name }}</h5>
+                            <p>{{ product.description }}</p>
+                            <p>Brand: {{ sdcards_usb.brand }}</p>
+                            <div class="product-actions">
+                                <a href="{% url 'product_detail' product.id %}" class="btn btn-primary"><i class="fas fa-info-circle"></i>รายละเอียด</a>
+                                <form method="POST" action="{% url 'like_product' product.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="like-button"><i class="far fa-heart"></i></button>
+                                </form>
+                            </div> 
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+<div class="category">
+    <h2>อุปกรณ์เชื่อมต่อ</h2>
+    <div class="row product-row">
+        {% if not product %}
+            {% for product in products %}
+                {% if product.quantity > 0 %}
+                    {% for connectivitydevice in product.connectivitydevice.all|slice:":5" %}
+                        <div class="col-lg-2 col-md-4 col-sm-6 product-item">
+                            <img src="{{ product.image1.url }}" class="product-image" alt="Product Image">
+                            <h5>{{ product.name }}</h5>
+                            <p>{{ product.description }}</p>
+                            <p>Brand: {{ connectivitydevice.brand }}</p>
+                            <div class="product-actions">
+                                <a href="{% url 'product_detail' product.id %}" class="btn btn-primary"><i class="fas fa-info-circle"></i>รายละเอียด</a>
+                                <form method="POST" action="{% url 'like_product' product.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="like-button"><i class="far fa-heart"></i></button>
+                                </form>
+                            </div> 
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function(){
+        $('#logoCarousel').carousel({
+            interval: 2000 
+        });
+    });
+</script>
+
+{% endblock %}

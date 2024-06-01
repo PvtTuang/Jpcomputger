@@ -1,0 +1,70 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/buy/likeproduct.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
+<h1>สินค้าที่ถูกใจ</h1>
+{% if liked_products %}
+    <div class="product-row">
+        {% for like in liked_products %}
+            <div class="col-lg-2 col-md-4 col-sm-6 product-item">
+                <img src="{{ like.product.image1.url }}" class="product-image" alt="Product Image">
+                <h5>{{ like.product.name }}</h5>
+                <p>{{ like.product.description }}</p>
+                {% if product.computer.all %}
+                        {% for computer in product.computer.all %}
+                            <p>Brand: {{ computer.brand }}</p>
+                        {% endfor %}
+                    {% endif %}
+                    {% if product.notebook.all %}
+                        {% for notebook in product.notebook.all %}
+                            <p>Brand: {{ notebook.brand }}</p>
+                        {% endfor %}
+                    {% endif %}
+                    {% if product.monitor.all %}
+                        {% for monitor in product.monitor.all %}
+                            <p>Brand: {{ monitor.brand }}</p>
+                        {% endfor %}
+                    {% endif %}
+                    {% if product.mousekeyboard.all %}
+                        {% for mousekeyboard in product.mousekeyboard.all %}
+                            <p>Brand: {{ mousekeyboard.brand }}</p>
+                        {% endfor %}
+                    {% endif %}
+                    {% if product.headphonespeaker.all %}
+                        {% for headphonespeaker in product.headphonespeaker.all %}
+                            <p>Brand: {{ headphonespeaker.brand }}</p>
+                        {% endfor %}
+                    {% endif %}
+                    {% if product.printer.all %}
+                        {% for printer in product.printer.all %}
+                            <p>Brand: {{ printer.brand }}</p>
+                        {% endfor %}
+                    {% endif %}
+                    {% if product.sdcards_usb.all %}
+                        {% for sdcards_usb in product.sdcards_usb.all %}
+                            <p>Brand: {{ sdcards_usb.brand }}</p>
+                        {% endfor %}
+                    {% endif %}
+                    {% if product.connectivitydevice.all %}
+                        {% for connectivitydevice in product.connectivitydevice.all %}
+                            <p>Brand: {{ connectivitydevice.brand }}</p>
+                        {% endfor %}
+                    {% endif %}
+                <div class="product-actions">
+                    <a href="{% url 'product_detail' like.product.id %}" class="btn btn-primary"><i class="fas fa-info-circle"></i> รายละเอียด</a>
+                    <form method="POST" action="{% url 'unlike_product' like.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="like-button"><i class="far fa-heart"></i> ไม่ชอบ</button>
+                    </form>                     
+                </div>                   
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>ไม่มีสินค้าที่ชอบ.</p>
+{% endif %}
+
+{% endblock %}

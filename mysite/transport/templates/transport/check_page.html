@@ -1,0 +1,14 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/transport/checktran.css' %}">
+    <div class="checkorder-container">
+        <div class="checkorder">
+            <h1>กำลังตรวจสอบคำสั่งซื้อ</h1>
+            <p>กรุณารอสักครู่</p>
+            <div class="backpageorder">
+                <a href="{% url 'show_orders' %}" class="back-button">ย้อนกลับ</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

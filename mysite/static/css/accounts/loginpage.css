@@ -1,0 +1,40 @@
+body {
+    background-color: #009900;
+}
+.boxlogin {
+    width: 1100px; /* กำหนดความกว้างของกล่องเข้ารหัส */
+    margin: auto; /* ทำให้กล่องเข้ารหัสอยู่ตรงกลางของหน้าจอ */
+    padding: 350px; /* เพิ่มระยะขอบภายในกล่องเข้ารหัส */
+    border-radius: 20px; /* กำหนดความโค้งของขอบกล่องเข้ารหัส */
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.1); /* เพิ่มเงาให้กล่องเข้ารหัส */
+    margin-top: 5%;
+    background-color: #ffff;
+}
+
+.buttonline {
+    text-align: center; /* จัดข้อความภายในกล่องเข้ารหัสให้อยู่ตรงกลาง */
+}
+
+.buttonline a {
+    text-decoration: none; /* ลบการขีดเส้นใต้ข้อความลิงก์ */
+    padding: 10px 20px; /* เพิ่มระยะห่างภายในปุ่ม */
+    background-color: #06C755; /* สีพื้นหลังของปุ่ม */
+    color: #fff; /* สีข้อความภายในปุ่ม */
+    border-radius: 5px; /* กำหนดความโค้งของขอบปุ่ม */
+    transition: background-color 0.3s ease; /* เพิ่มอนิเมชันการเปลี่ยนสีพื้นหลังของปุ่ม */
+    height: 75px; /* กำหนดความสูงของปุ่ม */
+    display: flex; /* ให้ปุ่มอยู่ในโหมด flex */
+    justify-content: flex-start; /* จัดเรียงแนวนอนของเนื้อหาให้อยู่ตรงกลาง */
+    align-items: center; /* จัดเรียงแนวตั้งของเนื้อหาให้อยู่ตรงกลาง */
+}
+
+.buttonline a:hover {
+    background-color: #009900; /* เปลี่ยนสีพื้นหลังของปุ่มเมื่อเมาส์วางหน้าปุ่ม */
+}
+
+.buttonline img {
+    width: 50px; /* กำหนดความกว้างของรูปภาพ */
+    height: auto; /* ความสูงของรูปภาพจะปรับตามอัตราส่วนของความกว้าง */
+    margin-right: 100px; /* เพิ่มระยะห่างด้านขวาของรูปภาพ */
+}
+

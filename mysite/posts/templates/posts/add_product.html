@@ -1,0 +1,37 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/posts/postsadd.css' %}">
+
+<div class="backpost">
+    <a href="{% url 'product_list' %}">ย้อนกลับ</a>
+</div>
+
+<div class="addnewproduct">
+    <h1>เพิ่มสินค้าใหม่</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}    
+        <p>ประเภทสินค้า: {{ form.product_type }}</p>
+        <p>ชื่อ: {{ form.name }}</p>
+        <p>คำอธิบาย: {{ form.description }}</p>
+        <p>ราคา: {{ form.price }}</p>
+        <p>จำนวน: {{ form.quantity }}</p>
+        <p>ระยะเวลารับประกัน: {{ form.warranty }}</p>
+        <div>
+            <label for="id_image1">Image 1:</label>
+            <input type="file" name="image1" id="id_image1" accept="image/*" capture>
+        </div>
+        <div>
+            <label for="id_image2">Image 2:</label>
+            <input type="file" name="image2" id="id_image2" accept="image/*" capture>
+        </div>
+        <div>
+            <label for="id_image3">Image 3:</label>
+            <input type="file" name="image3" id="id_image3" accept="image/*" capture>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+    
+
+{% endblock %}

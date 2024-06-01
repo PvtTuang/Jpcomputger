@@ -1,0 +1,51 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/buy/list.css' %}">
+ 
+<h1>คำสั่งซื้อของคุณ</h1>
+<div class="orderlist">
+    <table>
+        <thead>
+            <tr>
+                <th>คำสั่งซื้อที่</th>
+                <th>สถานะคำสั่งซื้อ</th>
+                <th>รายละเอียดคำสั่งซื้อ</th>
+                <th>รายละเอียดการจัดส่ง</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in user_orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>
+                    {% if order.status == "ตรวจสอบคำสั่งซื้อ" %}
+                        <span class="status in-progress">{{ order.status }}</span>
+                    {% elif order.status == "กำลังจัดส่ง" %}
+                        <span class="status processing">{{ order.status }}</span>
+                    {% elif order.status == "ขอคืนสินค้า" %}
+                        <span class="status return-requested">{{ order.status }}</span>
+                    {% elif order.status == "จัดส่งสำเร็จ" %}
+                        <span class="status delivered">{{ order.status }}</span>
+                    {% elif order.status == "คืนสินค้า" %}
+                        <span class="status returned">{{ order.status }}</span>
+                    {% else %}
+                        <span class="status">{{ order.status }}</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <form action="{% url 'order_detail' order.id %}" method="get">
+                        <button type="submit" class="button">รายละเอียด</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="{% url 'transport_order_detail' order.id %}" method="get">
+                        <button type="submit" class="button">การจัดส่ง</button>
+                    </form>
+                </td>                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

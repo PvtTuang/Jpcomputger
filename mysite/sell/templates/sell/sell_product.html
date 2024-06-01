@@ -1,0 +1,140 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/sell/addsell.css' %}">
+
+<div class="container">
+    <h1>Sell Product</h1>
+    <form method="GET" action="{% url 'search_sell_results' %}" class="search-form">
+        <input type="text" name="q" placeholder="Search products..." class="search-input">
+        <button type="submit" class="search-button">Search</button>
+    </form>
+    <hr>
+
+    <div class="filter-buttons">
+        <a href="{% url 'computer_filter' %}" class="filter-button">คอมพิวเตอร์</a>
+        <a href="{% url 'notebook_filter' %}" class="filter-button">โน๊ตบุ๊ค</a>
+        <a href="{% url 'monitor_filter' %}" class="filter-button">จอมอนิเตอร์</a>
+        <a href="{% url 'mousekeyboard_filter' %}" class="filter-button">เมาส์และคีย์บอร์ด</a>
+        <a href="{% url 'headphonespeaker_filter' %}" class="filter-button">หูฟังและลำโพง</a>
+        <a href="{% url 'printer_filter' %}" class="filter-button">เครื่องพิมพ์</a>
+        <a href="{% url 'sdcards_usb_filter' %}" class="filter-button">การ์ด SD และ USB</a>
+        <a href="{% url 'connectivitydevice_filter' %}" class="filter-button">อุปกรณ์เชื่อมต่อ</a>
+    </div>
+    
+    <div class="products">
+        {% for product in products %}
+        <div class="product">
+            {% if product.computer.all %}
+            <h3>ชื่อสินค้า: {{ product.name }}</h3>
+            <p>รายละเอียด: {{ product.description }}</p>
+            {% for computer in product.computer.all %}
+            <p>ยี่ห้อ : {{ computer.brand }}
+                CPU : {{ computer.cpu_band }}
+                GEN : {{ computer.cpu_gen }} - {{ computer.cpu_series }} 
+                RAM : {{ computer.ram }} GB
+                ROM : {{ computer.rom }}
+                MAINBOARD : {{ computer.mainboard }}
+                POWER SUPPLY : {{ computer.powersupply}}
+                การ์ดจอ : {{ computer.gpu }}
+                ระบบปฏิบัติการ : {{ computer.system }}
+            {% endfor %}
+            <p>ราคา: {{ product.price|floatformat:0 }}</p>
+            {% endif %}
+            
+            {% if product.notebook.all %}
+            <h3>ชื่อสินค้า: {{ product.name }}</h3>
+            <p>รายละเอียด: {{ product.description }}</p>
+            {% for notebook in product.notebook.all %}
+            <p>ยี่ห้อ : {{ notebook.brand }}
+                CPU : {{ notebook.cpu_band }}
+                GEN : {{ notebook.cpu_gen }} - {{ notebook.cpu_series }}
+                RAM : {{ notebook.ram }}  
+                ROM : {{ notebook.rom }}
+                ขนาดหน้าจอ : {{ notebook.display }} นิ้ว
+                กล้องหน้า : {{ notebook.camera }}
+                การ์ดจอ : {{ notebook.gpu }}
+                ระบบปฏิบัติการ : {{ notebook.system }}</p>
+            {% endfor %}
+            <p>ราคา: {{ product.price|floatformat:0 }}</p>
+            {% endif %}
+            
+            {% if product.monitor.all %}
+            <h3>ชื่อสินค้า: {{ product.name }}</h3>
+            <p>รายละเอียด: {{ product.description }}</p>
+            {% for monitor in product.monitor.all %}
+            <p>ยี่ห้อ : {{ monitor.brand }} 
+                ขนาด : {{ monitor.size }} นิ้ว
+                พาแนล : {{ monitor.panel }} 
+                รีเฟรชเรท : {{ monitor.refresh_rate }}</p>
+            {% endfor %}
+            <p>ราคา: {{ product.price|floatformat:0 }}</p>
+            {% endif %}
+            
+            {% if product.mousekeyboard.all %}
+            <h3>ชื่อสินค้า: {{ product.name }}</h3>
+            <p>รายละเอียด: {{ product.description }}</p>
+            {% for mousekeyboard in product.mousekeyboard.all %}
+            <p>ยี่ห้อ : {{ mousekeyboard.brand }}
+                DPI : {{ mousekeyboard.dpi }}
+                การเชื่อมต่อ : {{ mousekeyboard.connect }}</p>
+            {% endfor %}
+            <p>ราคา: {{ product.price|floatformat:0 }}</p>
+            {% endif %}
+            
+            {% if product.headphonespeaker.all %}
+            <h3>ชื่อสินค้า: {{ product.name }}</h3>
+            <p>รายละเอียด: {{ product.description }}</p>
+            {% for headphonespeaker in product.headphonespeaker.all %}
+            <p>ยี่ห้อ : {{ headphonespeaker.brand }}
+                ขนาด : {{ headphonespeaker.size }}
+                การเชื่อมต่อ : {{ headphonespeaker.connect }}</p>
+            {% endfor %}
+            <p>ราคา: {{ product.price|floatformat:0 }}</p>
+            {% endif %}
+            
+            {% if product.printer.all %}
+            <h3>ชื่อสินค้า: {{ product.name }}</h3>
+            <p>รายละเอียด: {{ product.description }}</p>
+            {% for printer in product.printer.all %}
+            <p>ยี่ห้อ : {{ printer.brand }} 
+                ประเภทสี : {{ printer.color }}
+                ประเภทหมึก : {{ printer.type_of_ink }}</p>
+            {% endfor %}
+            <p>ราคา: {{ product.price|floatformat:0 }}</p>
+            {% endif %}
+            
+            {% if product.sdcards_usb.all %}
+            <h3>ชื่อสินค้า: {{ product.name }}</h3>
+            <p>รายละเอียด: {{ product.description }}</p>
+            {% for sdcards_usb in product.sdcards_usb.all %}
+            <p>ยี่ห้อ : {{ sdcards_usb.brand }} 
+                ความจุ : {{ sdcards_usb.capacity }}
+                ความเร็ว : {{ sdcards_usb.speed }}  </p>
+            {% endfor %}
+            <p>ราคา: {{ product.price|floatformat:0 }}</p>
+            {% endif %}
+            
+            {% if product.connectivitydevice.all %}
+            <h3>ชื่อสินค้า: {{ product.name }}</h3>
+            <p>รายละเอียด: {{ product.description }}</p>
+            {% for connectivitydevice in product.connectivitydevice.all %}
+            <p>ยี่ห้อ : {{ connectivitydevice.brand }}
+                ประเภทการเชื่อมต่อ : {{ connectivitydevice.type }}</p>
+            {% endfor %}
+            <p>ราคา: {{ product.price|floatformat:0 }}</p>
+            {% endif %}
+            
+            <form method="POST" action="{% url 'sell_product' product.id %}" class="sell-form">
+                {% csrf_token %}
+                <input type="number" name="quantity_sold" placeholder="Quantity to sell" class="quantity-input">
+                <button type="submit" class="sell-button">Sell</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div id="productSalesGraph"></div>
+
+{% endblock %}

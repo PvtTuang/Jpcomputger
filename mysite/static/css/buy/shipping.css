@@ -1,0 +1,94 @@
+/* shipping.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+}
+
+.shippingbox {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.shippingbox h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.shippingbox ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.shippingbox li {
+    background-color: #f9f9f9;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.shippingbox li p {
+    margin: 5px 0;
+}
+
+.btn-add-address,
+.btn-edit,
+.btn-delete {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.btn-add-address {
+    display: block;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.btn-edit {
+    background-color: #28a745;
+}
+
+.btn-delete {
+    background-color: #dc3545;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-add-address:hover,
+.btn-edit:hover,
+.btn-delete:hover {
+    opacity: 0.9;
+}
+
+form {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+form button {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #fff;
+    border-radius: 5px;
+    background-color: #dc3545;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #c82333;
+}

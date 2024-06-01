@@ -1,0 +1,74 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+    background-color: #f0f0f0;
+}
+
+.boxtran {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 600px;
+}
+
+.trandetail p, .confirmtran p {
+    margin: 10px 0;
+}
+
+.copy-button, .confirm-button, .return-button, .line-button img {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 0;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.copy-button:hover, .confirm-button:hover, .return-button:hover, .line-button img:hover {
+    background-color: #45a049;
+}
+
+.line-button img {
+    background-color: transparent;
+    padding: 0;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+a.return-button {
+    display: inline-block;
+}
+
+.line-button img:hover {
+    opacity: 0.8;
+}
+
+.back-order {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.back-order {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #007bff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.back-order:hover {
+    background-color: #0056b3;
+}

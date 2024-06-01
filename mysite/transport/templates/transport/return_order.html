@@ -1,0 +1,19 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/transport/returntran.css' %}">
+
+<div class="returnorder-container">
+    <div class="returnorder">
+        <h1>คืนสินค้า</h1>
+        <p>คุณแน่ใจหรือไม่ว่าต้องการคืนสินค้านี้</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="return-order-btn">ใช่, คืนสินค้า</button>
+        </form>
+        <a href="{% url 'transport_order_detail' transport_order.order.id %}" class="go-back-link">ไม่, กลับไป</a>
+    </div>
+</div>
+
+   
+{% endblock %}

@@ -1,0 +1,136 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/buy/payment.css' %}">
+ 
+    <h1>สแกนจ่ายด้วย PromptPay</h1>
+    <h2>รายละเอียดการสั่งสินค้า:</h2>
+<div class="productdetail">
+    <ul>
+        {% for cart_item in order.cart.cartitem_set.all %}
+            <li><img src="{{ cart_item.product.image1.url }}" alt="{{ cart_item.product.name }}" class="product-image">
+                {{ cart_item.product.name }}:
+                {% if cart_item.product.product_type.name == 'Computer' %}
+                    {% for computer in cart_item.product.computer.all %}
+                     {{ computer.brand }} - {{ computer.cpu_band }}
+                     {{ computer.cpu_gen }} {{ computer.cpu_series }}
+                     Ram {{ computer.ram }} GB Rom {{ computer.rom }}
+                     {{ computer.gpu }} 
+                    {% endfor %}
+                {% endif %} 
+                
+                {% if cart_item.product.product_type.name == 'Notebook' %}
+                    {% for notebook in cart_item.product.notebook.all %}
+                     {{ notebook.brand }} - {{ notebook.cpu_band }}
+                     {{ notebook.cpu_gen }} {{ notebook.cpu_series }}
+                     Ram {{ notebook.ram }} GB Rom {{ notebook.rom }}
+                     {{ notebook.gpu }} 
+                    {% endfor %}
+                {% endif %} 
+
+                {% if cart_item.product.product_type.name == 'Monitor' %}
+                    {% for monitor in cart_item.product.monitor.all %}
+                     {{ monitor.brand }} - ขนาด {{ monitor.size }} นิ้ว
+                     พาแนล {{ monitor.panel }} รีเฟรชเรท {{ monitor.refresh_rate }} 
+                    {% endfor %}
+                {% endif %} 
+
+                {% if cart_item.product.product_type.name == 'MouseKeyboard' %}
+                    {% for mousekeyboard in cart_item.product.mousekeyboard.all %}
+                     {{ mousekeyboard.brand }} - DPI {{ mousekeyboard.dpi }}
+                     การเชื่อมต่อ {{ mousekeyboard.connect }} 
+                    {% endfor %}
+                {% endif %} 
+
+                {% if cart_item.product.product_type.name == 'HeadphoneSpeakers' %}
+                    {% for headphonespeaker in cart_item.product.headphonespeaker.all %}
+                     {{ headphonespeaker.brand }} - ขนาด {{ headphonespeaker.size }}
+                     การเชื่อมต่อ {{ headphonespeaker.connect }} 
+                    {% endfor %}
+                {% endif %}
+                
+                {% if cart_item.product.product_type.name == 'Printers' %}
+                    {% for printer in cart_item.product.printer.all %}
+                     {{ printer.brand }} - ประเภทสี {{ printer.color }}
+                     ประเภทหมึก {{ printer.type_of_ink }} 
+                    {% endfor %}
+                {% endif %} 
+
+                {% if cart_item.product.product_type.name == 'SDCards_USBs' %}
+                    {% for sdcards_usb in cart_item.product.sdcards_usb.all %}
+                     {{ sdcards_usb.brand }} - ความจุ {{ sdcards_usb.capacity }}
+                     ความเร็ว {{ sdcards_usb.speed }}  
+                    {% endfor %}
+                {% endif %} 
+
+                {% if cart_item.product.product_type.name == 'ConnectivityDevices' %}
+                    {% for connectivitydevice in cart_item.product.connectivitydevice.all %}
+                     {{ connectivitydevice.brand }} - {{ connectivitydevice.cpu_band }}
+                     {{ connectivitydevice.cpu_gen }} {{ connectivitydevice.cpu_series }}
+                     Ram {{ connectivitydevice.ram }} GB Rom {{ connectivitydevice.rom }}
+                     {{ connectivitydevice.gpu }} 
+                    {% endfor %}
+                {% endif %} </li>
+        {% endfor %}
+    </ul>
+
+    <p>ราคารวม: {{ total_amount|floatformat:0 }}</p>
+</div>
+
+    <div class="qr-code-container">
+        <img src="{% static 'images/prompt-pay-logo.png' %}" alt="" class="PromptPayimges">
+        <img src="data:image/png;base64,{{ qr_code_image }}" alt="PromptPay QR Code" class="PromptPayimges">
+    </div>
+
+    <div class="shippping">
+        <form method="post" action="{% url 'get_shipping_address' order.id %}" id="shipping-form">
+            {% csrf_token %}
+            <label for="shipping_address">เลือกที่อยู่ในการจัดส่ง:</label>
+            <select name="shipping_address" id="shipping_address" required>
+                {% for shipping_address in shipping_addresses %}
+                    <option value="{{ shipping_address.id }}">{{ shipping_address.firstname }} {{ shipping_address.lastname }} - {{ shipping_address.house_number }}, {{ shipping_address.swine }}, {{ shipping_address.subswine }}, {{ shipping_address.subdistrict }}, {{ shipping_address.district }}, {{ shipping_address.province }}, {{ shipping_address.postal_code }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">ตกลง</button>
+        </form>
+        <a href="{% url 'view_shipping_addresses' %}" class="add-address-link">เพิ่มที่อยู่</a>
+    </div>
+ 
+    <div class="uploadslip">
+        <form action="{% url 'upload_slip' order.id %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="slip_image">เลือกภาพสลิปการชำระเงิน</label><br>
+            <input type="file" id="slip_image" name="slip_image"><br>
+            <button type="submit">อัพโหลด</button>
+        </form>
+    </div>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Auto-submit shipping address form
+        var shippingSelect = document.getElementById("shipping_address");
+        var shippingForm = document.getElementById("shipping-form");
+        var orderId = "{{ order.id }}"; 
+        
+        if (shippingSelect.options.length > 0) {
+            shippingSelect.selectedIndex = 0; 
+            
+            if (!sessionStorage.getItem('formSubmitted_' + orderId)) {
+                sessionStorage.setItem('formSubmitted_' + orderId, 'true'); 
+                shippingForm.submit(); 
+            }
+        }
+
+        var slipForm = document.querySelector(".uploadslip form"); 
+        var slipImageInput = document.getElementById("slip_image");
+
+        slipForm.addEventListener("submit", function(event) {
+            if (slipImageInput.files.length === 0) {
+                event.preventDefault(); 
+                alert("กรุณาเลือกภาพสลิปการชำระเงิน");
+            }
+        });
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/posts/addposts.css' %}">
+
+<div class="backposts">
+    <a href="{% url 'product_list' %}">ย้อนกลับ</a>
+</div>
+
+<div class="detailaddall">
+    <h1>Add Monitor</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <ul>
+            <p>Product id: {{ product.id }} {{ product.name }} {{ product.description }}</p>
+            <input type="hidden" name="product" value="{{ product.id }}">
+        </ul>
+        <ul>
+            <p>Brand</p>{{ form.brand }}
+        </ul>
+        <ul>
+            <p>Size</p>{{ form.size }}
+        </ul>
+        <ul>
+            <p>Panel</p>{{ form.panel }}
+        </ul>
+        <ul>
+            <p>Refresh_rate</p>{{ form.refresh_rate }}
+        </ul>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+{% endblock %}
+
+

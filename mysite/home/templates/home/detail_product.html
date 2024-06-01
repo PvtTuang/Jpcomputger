@@ -1,0 +1,157 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/home/detailproduct.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<div class="product-detail-container">
+    <h1>รายละเอียดสินค้า</h1>
+
+    <div class="product-detail">
+        <div class="image-section">
+            <div class="main-image">
+                <img src="{{ product.image1.url }}" id="main-img" alt="Product Image">
+            </div>
+            <div class="image-container">
+                <img src="{{ product.image1.url }}" class="product-image" alt="Product Image" onclick="changeImage('{{ product.image1.url }}')">
+                <img src="{{ product.image2.url }}" class="product-image" alt="Product Image" onclick="changeImage('{{ product.image2.url }}')">
+                <img src="{{ product.image3.url }}" class="product-image" alt="Product Image" onclick="changeImage('{{ product.image3.url }}')">
+            </div>
+        </div>
+
+        <div class="details-section">
+            <h2>{{ product.name }}</h2>
+            <p class="description">{{ product.description }}</p>
+            <h3>รายละเอียด</h3>
+            <div class="specifications">
+                {% if product.product_type.name == 'Computer' %}
+                {% for computer in product.computer.all %}
+                <strong>
+                <p>ยี่ห้อ : {{ computer.brand }}</p>
+                <p>CPU : {{ computer.cpu_band }}</p>
+                <p>GEN : {{ computer.cpu_gen }} - {{ computer.cpu_series }} </p>
+                <p>RAM : {{ computer.ram }} GB</p>
+                <p>ROM : {{ computer.rom }}</p>
+                <p>MAINBOARD : {{ computer.mainboard }}</p>
+                <p>POWER SUPPLY : {{ computer.powersupply}}</p>
+                <p>การ์ดจอ : {{ computer.gpu }}</p>
+                <p>ระบบปฏิบัติการ : {{ computer.system }}</p>
+                <p>ของแถม : {{ computer.accessorise }}</p>
+                </strong>
+                {% endfor %}
+            {% endif %} 
+            
+            {% if product.product_type.name == 'Notebook' %}
+                {% for notebook in product.notebook.all %}
+                <strong>
+                <p>ยี่ห้อ : {{ notebook.brand }}</p>
+                <p>CPU : {{ notebook.cpu_band }}</p>
+                <p>GEN : {{ notebook.cpu_gen }} - {{ notebook.cpu_series }}</p>
+                <p>RAM : {{ notebook.ram }}</p>  
+                <p>ROM : {{ notebook.rom }}</p>
+                <p>ขนาดหน้าจอ : {{ notebook.display }} นิ้ว</p>
+                <p>กล้องหน้า : {{ notebook.camera }}</p>
+                <p>การ์ดจอ : {{ notebook.gpu }}</p>
+                <p>ระบบปฏิบัติการ : {{ notebook.system }}</p>
+                <p>ของแถม : {{ notebook.accessorise }}</p>
+                </strong>
+                
+                {% endfor %}
+            {% endif %} 
+
+            {% if product.product_type.name == 'Monitor' %}
+                {% for monitor in product.monitor.all %}
+                <strong>
+                <p>ยี่ห้อ : {{ monitor.brand }} </p>
+                <p>ขนาด : {{ monitor.size }} นิ้ว</p>
+                <p>พาแนล : {{ monitor.panel }} </p>
+                <p>รีเฟรชเรท : {{ monitor.refresh_rate }}</p>
+                </strong>
+                
+                 
+                {% endfor %}
+            {% endif %} 
+
+            {% if product.product_type.name == 'MouseKeyboard' %}
+                {% for mousekeyboard in product.mousekeyboard.all %}
+                <strong>
+                <p>ยี่ห้อ : {{ mousekeyboard.brand }}</p>
+                <p>DPI : {{ mousekeyboard.dpi }}</p> 
+                <p>การเชื่อมต่อ : {{ mousekeyboard.connect }}</p>
+                </strong>
+                {% endfor %}
+            {% endif %} 
+
+            {% if product.product_type.name == 'HeadphoneSpeakers' %}
+                {% for headphonespeaker in product.headphonespeaker.all %}
+                <strong>
+                <p>ยี่ห้อ : {{ headphonespeaker.brand }}</p>
+                <p>ขนาด : {{ headphonespeaker.size }}</p>
+                <p>การเชื่อมต่อ : {{ headphonespeaker.connect }}</p>
+                </strong>
+                
+                {% endfor %}
+            {% endif %}
+            
+            {% if product.product_type.name == 'Printers' %}
+                {% for printer in product.printer.all %}
+                <strong>
+                <p>ยี่ห้อ : {{ printer.brand }} </p>
+                <p>ประเภทสี : {{ printer.color }}</p>
+                <p>ประเภทหมึก : {{ printer.type_of_ink }}</p>
+                </strong>
+                
+                {% endfor %}
+            {% endif %} 
+
+            {% if product.product_type.name == 'SDCards_USBs' %}
+                {% for sdcards_usb in product.sdcards_usb.all %}
+                <strong>
+                <p>ยี่ห้อ : {{ sdcards_usb.brand }} </p>
+                <p>ความจุ : {{ sdcards_usb.capacity }}</p>
+                <p>ความเร็ว : {{ sdcards_usb.speed }}  </p>
+                </strong>
+                {% endfor %}
+            {% endif %} 
+
+            {% if product.product_type.name == 'ConnectivityDevices' %}
+                {% for connectivitydevice in product.connectivitydevice.all %}
+                <strong>
+                <p>ยี่ห้อ : {{ connectivitydevice.brand }}</p>
+                <p>ประเภทการเชื่อมต่อ : {{ connectivitydevice.type }}</p>
+                </strong>
+                {% endfor %}
+            {% endif %} 
+            </div>
+            <strong>
+                <p>ระยะเวลารับประกัน: {{ product.warranty }}</p>
+            </strong>
+            <p class="price">{{ product.price|floatformat:0 }} บาท</p>
+            
+            <form action="{% url 'add_to_cart' product.id %}" method="post" class="add-to-cart-form">
+                {% csrf_token %}
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" name="quantity" min="1" value="1">
+                <button type="submit">Add to Cart</button>
+            </form>
+
+            <form method="POST" action="{% url 'like_product' product.id %}" class="like-product-form">
+                {% csrf_token %}
+                <button type="submit"><i class="far fa-heart"></i> Like</button>
+            </form>
+        </div>
+        <p>สอบถามเพื่อเติม:</p>
+        <a href="https://lin.ee/qlFYVsG">
+            <img src="https://scdn.line-apps.com/n/line_add_friends/btn/th.png" alt="เพิ่มเพื่อน" height="36" border="0">
+        </a>
+    </div>
+
+    <a href="{% url 'home' %}" class="back-to-home"><i class="fas fa-home"></i> กลับไปหน้าหลัก</a>
+</div>
+
+<script>
+    function changeImage(newImageUrl) {
+        document.getElementById("main-img").src = newImageUrl;
+    }
+</script>
+{% endblock %}

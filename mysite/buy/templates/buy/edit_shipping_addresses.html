@@ -1,0 +1,55 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/buy/addship.css' %}">
+
+<a href="{% url 'view_shipping_addresses' %}" class="btn-back">ย้อนกลับ</a>
+<div class="addshipping">
+    <h1>แก้ไขที่อยู่ในการจัดส่ง</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="{{ form.firstname.id_for_label }}">ชื่อจริง:</label>
+            {{ form.firstname }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.lastname.id_for_label }}">นามสกุล:</label>
+            {{ form.lastname }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.number.id_for_label }}">เบอร์มือถือ:</label>
+            {{ form.number }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.house_number.id_for_label }}">บ้านเลขที่:</label>
+            {{ form.house_number }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.swine.id_for_label }}">หมู่ที่:</label>
+            {{ form.swine }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.subswine.id_for_label }}">ซอย/ถนน:</label>
+            {{ form.subswine }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.subdistrict.id_for_label }}">แขวง/ตำบล:</label>
+            {{ form.subdistrict }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.district.id_for_label }}">เขต/อำเภอ:</label>
+            {{ form.district }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.province.id_for_label }}">จังหวัด:</label>
+            {{ form.province }}
+        </div>
+        <div class="form-group">
+            <label for="{{ form.postal_code.id_for_label }}">รหัสไปรษณีย์:</label>
+            {{ form.postal_code }}
+        </div>
+        <button type="submit" class="btn-submit">บันทึกที่อยู่</button>
+    </form>
+</div>
+
+{% endblock %}

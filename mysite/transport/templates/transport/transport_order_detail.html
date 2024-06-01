@@ -1,0 +1,57 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/transport/trandetail.css' %}">
+
+<div class="back_order">
+    <a href="{% url 'show_orders' %}" class="back-order">ย้อนกลับ</a>
+</div>
+
+<div class="container">
+    <div class="boxtran">
+        <div class="trandetail">
+            <h1>รายละเอียดคำสั่งขนส่งสำหรับรหัสคำสั่งซื้อ: {{ transport_order.order.id }}</h1>
+            <p>ขนส่ง: {{ transport_order.courier }}</p>
+            <p>
+                หมายเลขพัสดุ: <span id="parcelNumber">{{ transport_order.parcel_number }}</span>
+                <button class="copy-button" onclick="copyParcelNumber()">คัดลอก</button>
+            </p>
+            <p>สถานะการจัดส่ง: {{ transport_order.delivery_status }}</p>
+            <p>วันที่จัดส่ง: {{ transport_order.delivery_date }}</p>
+        </div>
+
+        <div class="confirmtran">
+            <form action="{% url 'confirm_received' transport_order.order.id %}" method="post">
+                {% csrf_token %}
+                {% if transport_order.delivery_status == 'จัดส่งเสร็จสิ้น' %}
+                    {% if not transport_order.delivery_status == 'ขอคืนสินค้า' %}
+                        <button type="submit" class="confirm-button">ยืนยันการรับสินค้า</button>
+                    {% endif %}
+                {% endif %}
+            </form>
+            {% if transport_order.delivery_status == 'จัดส่งเสร็จสิ้น' %}
+                {% if can_return %}
+                    <a href="{% url 'return_order' transport_order.order.id %}" class="return-button">คืนสินค้า</a>
+                {% endif %}
+            {% endif %}
+            {% if transport_order.delivery_status == 'ขอคืนสินค้า' %}
+                <a href="https://lin.ee/Idffccf" class="line-button">
+                    <img src="https://scdn.line-apps.com/n/line_add_friends/btn/th.png" alt="เพิ่มเพื่อน" height="36" border="0">
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+    function copyParcelNumber() {
+        var parcelNumber = document.getElementById("parcelNumber").innerText;
+        navigator.clipboard.writeText(parcelNumber).then(function() {
+            alert("Parcel number copied to clipboard");
+        }, function() {
+            alert("Failed to copy parcel number");
+        });
+    }
+</script>
+
+{% endblock %}

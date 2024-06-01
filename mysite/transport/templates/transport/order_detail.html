@@ -1,0 +1,142 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/transport/detail.css' %}">
+{% if user.profile.role.name == 'Customer' %}
+<div class="backpage">
+    <a href="{% url 'show_orders' %}">ย้อนกลับ</a>
+</div>
+{% else %}
+<div class="backpage">
+    <a href="{% url 'list_all_orders' %}">ย้อนกลับ</a>
+</div>
+{% endif %}
+
+<h1>รายละเอียด</h1>
+    <div class="content-box">
+        <div class="usercontent">
+            <h2>เลขที่คำสั่งซื้อ: {{ order.id }}</h2>
+            <h3>ชื่อผู้ใช้: {{ order.cart.user.first_name }} {{ order.cart.user.last_name }}</h3>
+            <p>สถานะสินค้า: {{ order.status }} 
+                {% if order.status == 'ขอคืนสินค้า' %}
+                    <a href="{% url 'confirm_return_order' order.id %}" class="return-button">ยืนยันการคืนสินค้า</a>
+                {% endif %}
+            </p>
+            <p>วันที่สั่งซื้อ: {{ order.created_at|date:"j F Y H:i" }}</p>
+        </div>
+        
+        <div class="useritem">
+            <h3>สินค้า:</h3>
+        <ul>
+            {% for item in order.cart.cartitem_set.all %}
+                <li> {{ item.product.name }}:
+                    {% if item.product.product_type.name == 'Computer' %}
+                        {% for computer in item.product.computer.all %}
+                         {{ computer.brand }} - {{ computer.cpu_band }}
+                         {{ computer.cpu_gen }} {{ computer.cpu_series }}
+                         Ram {{ computer.ram }} GB Rom {{ computer.rom }}
+                         {{ computer.gpu }} -
+                        {% endfor %}
+                    {% endif %} 
+                    
+                    {% if item.product.product_type.name == 'Notebook' %}
+                        {% for notebook in item.product.notebook.all %}
+                         {{ notebook.brand }} - {{ notebook.cpu_band }}
+                         {{ notebook.cpu_gen }} {{ notebook.cpu_series }}
+                         Ram {{ notebook.ram }} GB Rom {{ notebook.rom }}
+                         {{ notebook.gpu }} -
+                        {% endfor %}
+                    {% endif %} 
+
+                    {% if item.product.product_type.name == 'Monitor' %}
+                        {% for monitor in item.product.monitor.all %}
+                         {{ monitor.brand }} - ขนาด {{ monitor.size }} นิ้ว
+                         พาแนล {{ monitor.panel }} รีเฟรชเรท {{ monitor.refresh_rate }} -
+                        {% endfor %}
+                    {% endif %} 
+
+                    {% if item.product.product_type.name == 'MouseKeyboard' %}
+                        {% for mousekeyboard in item.product.mousekeyboard.all %}
+                         {{ mousekeyboard.brand }} - DPI {{ mousekeyboard.dpi }}
+                         การเชื่อมต่อ {{ mousekeyboard.connect }} -
+                        {% endfor %}
+                    {% endif %} 
+
+                    {% if item.product.product_type.name == 'HeadphoneSpeakers' %}
+                        {% for headphonespeaker in item.product.headphonespeaker.all %}
+                         {{ headphonespeaker.brand }} - ขนาด {{ headphonespeaker.size }}
+                         การเชื่อมต่อ {{ headphonespeaker.connect }} -
+                        {% endfor %}
+                    {% endif %}
+                    
+                    {% if item.product.product_type.name == 'Printers' %}
+                        {% for printer in item.product.printer.all %}
+                         {{ printer.brand }} - ประเภทสี {{ printer.color }}
+                         ประเภทหมึก {{ printer.type_of_ink }} -
+                        {% endfor %}
+                    {% endif %} 
+
+                    {% if item.product.product_type.name == 'SDCards_USBs' %}
+                        {% for sdcards_usb in item.product.sdcards_usb.all %}
+                         {{ sdcards_usb.brand }} - ความจุ {{ sdcards_usb.capacity }}
+                         ความเร็ว {{ sdcards_usb.speed }}  -
+                        {% endfor %}
+                    {% endif %} 
+
+                    {% if item.product.product_type.name == 'ConnectivityDevices' %}
+                        {% for connectivitydevice in item.product.connectivitydevice.all %}
+                         {{ connectivitydevice.brand }} - {{ connectivitydevice.cpu_band }}
+                         {{ connectivitydevice.cpu_gen }} {{ connectivitydevice.cpu_series }}
+                         Ram {{ connectivitydevice.ram }} GB Rom {{ connectivitydevice.rom }}
+                         {{ connectivitydevice.gpu }} -
+                        {% endfor %}
+                    {% endif %} 
+
+                    {{ item.product.price|floatformat:0 }} บาท</li>
+            {% endfor %}
+        </ul>
+        <p>ราคาทั้งหมด: {{ total_amount|floatformat:0 }} บาท</p>
+        </div>
+        
+        <div class="useraddress">
+            <h3>ที่อยู่ในการจัดส่ง:</h3>
+            <ul>
+                {% for address in shipping_addresses %}
+                    <li>{{ address.firstname }} {{ address.lastname }} - บ้านเลขที่ {{ address.house_number }}, หมู่ {{ address.swine }}, ซอย/ถนน {{ address.subswine }}, 
+                        แขวง/ตำบล {{ address.subdistrict }}, เขต/อำเภอ {{ address.district }}, 
+                        จังหวัด {{ address.province }}, {{ address.postal_code }}</li>
+                {% endfor %}
+            </ul>            
+        </div>
+        
+        <div class="userslip">
+            {% if order.slip_image %}
+            <h2>สลิปการโอนเงิน</h2>
+            <img src="{{ order.slip_image.url }}" alt="Slip Image">
+            {% endif %}
+        </div>
+        
+        <div class="statusbox">
+            {% if order.status == 'ตรวจสอบคำสั่งซื้อ' %}
+        
+        {% if user.profile.role.name == 'Owner' %}
+        <h3>ตัวเลือกการจัดส่ง</h3>
+        <form method="post">
+            {% csrf_token %}
+            ผู้ส่ง:{{ form.courier }} <br>
+            รหัสการจัดส่ง:{{ form.parcel_number }} <br>
+            เวลาที่ส่ง:{{ form.delivery_date }} <br>
+            <button type="submit" class="btn-submit">จัดส่งสินค้า</button>
+        </form>
+        {% endif %}
+        {% endif %}
+        {% if not order.status == 'ตรวจสอบคำสั่งซื้อ' %}
+        {% if user.profile.role.name == 'Owner' %}
+            <a href="{% url 'cancel_order' order.id %}" class="return-button">ยกเลิกสินค้า</a>
+        {% endif %}
+        {% endif %}
+        </div>
+    </div>
+
+    
+{% endblock %}

@@ -1,0 +1,79 @@
+/* postslist.css */
+
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.addposts {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.add-product-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.productbox {
+    margin: 0 auto;
+    width: 80%;
+}
+
+.productbox table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.productbox th, .productbox td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.productbox th {
+    background-color: #4caf50;
+    color: white;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.update-btn, .add-detail-btn, .update-detail-btn, .delete-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.update-btn, .add-detail-btn, .update-detail-btn {
+    background-color: #2196f3;
+    color: white;
+}
+
+.delete-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.add-detail-btn, .update-detail-btn, .delete-btn {
+    margin-left: 10px;
+}

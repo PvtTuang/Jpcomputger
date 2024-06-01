@@ -1,0 +1,94 @@
+.containercart {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px;
+}
+
+.productall table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.productall th, .productall td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.productall th {
+    background-color: #f2f2f2;
+}
+
+.productall tr:hover {
+    background-color: #f5f5f5;
+}
+
+.containercart p {
+    margin-top: 20px;
+}
+
+.update-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+}
+
+.remove-btn {
+    background-color: #dc3545;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none; 
+}
+
+.remove-btn:hover {
+    background-color: #c82333; 
+}
+
+.cart-payment {
+    text-align: center; 
+    margin-top: 20px;
+}
+
+.payment-btn {
+    background-color: #007bff; 
+    color: white;
+    padding: 12px 100px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s; 
+}
+
+.payment-btn:hover {
+    background-color: #0056b3; 
+}
+
+.back-to-shop {
+    margin-top: 20px; 
+}
+
+.back-to-shop-btn {
+    background-color: #28a745; 
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s; 
+    text-decoration: none; 
+}
+
+.back-to-shop-btn:hover {
+    background-color: #218838; 
+}
+
+.product-image {
+    width: 150px; 
+    height: 100px; 
+    margin-left: 5px;
+}

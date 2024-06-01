@@ -1,0 +1,41 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/accounts/manageuser.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<div class="user-profiles-container">
+    <h1>การจัดการผู้ใช้</h1>
+    <table class="user-profiles-table">
+        <thead>
+            <tr>
+                <th>ผู้ใช้</th>
+                <th>สถานะบัญชี</th>
+                <th>บล็อกผู้ใช้</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for profile in profiles %}
+                <tr class="{% cycle 'row-odd' 'row-even' %}">
+                    <td>{{ profile.user.first_name }}&nbsp;{{ profile.user.last_name }}</td>
+                    <td>{{ profile.role.name }}</td>
+                    <td>
+                        {% if profile.role.name == 'Customer' %}
+                            <form action="{% url 'block_user' profile.user.id %}" method="POST" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="action-button block-button">บล็อก</button>
+                            </form>
+                        {% elif profile.role.name == 'Blocked' %}
+                            <form action="{% url 'block_user' profile.user.id %}" method="POST" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="action-button unblock-button">ปลดบล็อก</button>
+                            </form>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
